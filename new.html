@@ -12,7 +12,7 @@
       font-family: 'Segoe UI', sans-serif;
       background: url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
       background-size: cover;
-      background-color: #121212; /* Resim yüklenmezse görünecek arka plan rengi */
+      background-color: #121212;
     }
 
     .baslik h2 {
@@ -95,11 +95,11 @@
 	}
 
     .gonderi {
-      background: rgba(0, 0, 0, 0.7); /* Siyah arka plan */
+      background: rgba(0, 0, 0, 0.7);
       padding: 10px;
       margin-top: 15px;
-      border-left: 4px solid white; /* Yeşil yerine beyaz kenar çizgisi */
-      color: white; /* Yazı rengi beyaz */
+      border-left: 4px solid white;
+      color: white;
       border-radius: 5px;
       position: relative;
     }
@@ -109,7 +109,7 @@
 		align-items: center;
 		margin-bottom: 10px;
 		padding-bottom: 5px;
-		border-bottom: 1px solid #444; /* Daha koyu çizgi */
+		border-bottom: 1px solid #444;
 	}
 	
 	.gonderi-profil-resim {
@@ -122,7 +122,7 @@
 	.gonderi-kullanici-isim {
 		font-weight: bold;
 		font-size: 14px;
-		color: white; /* Kullanıcı adı beyaz */
+		color: white;
 	}
 	
 	.profil-container {
@@ -140,12 +140,12 @@
 	}
 	
 	.profil-bilgi {
-		background-color: rgba(0, 0, 0, 0.7); /* Siyah arka plan */
+		background-color: rgba(0, 0, 0, 0.7);
 		padding: 15px;
 		border-radius: 10px;
 		margin-top: 20px;
-		color: white; /* Yazı rengi beyaz */
-		border: 1px solid white; /* Beyaz kenarlık */
+		color: white;
+		border: 1px solid white;
 	}
 	
 	.profil-isim {
@@ -157,12 +157,95 @@
 	
 	.profil-detay {
 		margin: 5px 0;
-		color: #ccc; /* Açık gri yazı */
+		color: #ccc;
 	}
 	
 	.profil-detay strong {
-		color: white; /* Kalın yazılar beyaz */
+		color: white;
 	}
+    
+    /* Yeni eklenen stiller */
+    .gonderi-aksiyonlar {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #444;
+    }
+    
+    .begeni-butonu {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    
+    .begeni-butonu:hover {
+      color: #ff6b6b;
+    }
+    
+    .sil-butonu {
+      background: none;
+      border: none;
+      color: #ccc;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    
+    .sil-butonu:hover {
+      color: white;
+    }
+    
+    .gonderi-zamani {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 5px;
+    }
+    
+    .tema-degis {
+      position: absolute;
+      left: 20px;
+      top: 15px;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    
+    /* Aydınlık tema stilleri */
+    body.aydinlik {
+      color: #333;
+      background-color: #f5f5f5;
+    }
+    
+    body.aydinlik .icerik,
+    body.aydinlik .gonderi,
+    body.aydinlik .profil-bilgi,
+    body.aydinlik .baslik,
+    body.aydinlik .sekme,
+    body.aydinlik button {
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #333;
+    }
+    
+    body.aydinlik .sekme.aktif,
+    body.aydinlik button {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    
+    body.aydinlik .gonderi {
+      border-left: 4px solid #333;
+    }
+    
+    body.aydinlik .gonderi-kullanici-isim,
+    body.aydinlik .profil-isim,
+    body.aydinlik .profil-detay strong {
+      color: #333;
+    }
   </style>
 </head>
 <body>
@@ -174,6 +257,7 @@
   </div>
 
   <div class="sekme-bar">
+    <button class="tema-degis" onclick="temaDegistir()">Karanlık Mod</button>
     <div class="sekme aktif" onclick="sekmeAc('gundem')">Gündem</div>
     <div class="sekme" onclick="sekmeAc('teknoloji')">Teknoloji</div>
     <div class="sekme" onclick="sekmeAc('egitim')">Eğitim</div>
@@ -239,7 +323,7 @@
     // Rastgele profil bilgileri oluşturma
     const isimler = ['Ahmet Yılmaz', 'Mehmet Demir', 'Ayşe Kaya', 'Fatma Şahin', 'Emre Koç', 'Zeynep Arslan'];
     const uyelikTarihleri = ['15 Mart 2023', '10 Ocak 2023', '22 Şubat 2023', '5 Aralık 2022', '30 Nisan 2023'];
-    const randomImg = Math.floor(Math.random() * 70) + 1; // 1-70 arası rastgele sayı
+    const randomImg = Math.floor(Math.random() * 70) + 1;
     
     // Kullanıcı bilgilerini global olarak tanımla
     const kullanici = {
@@ -282,6 +366,17 @@
 
       var yeni = document.createElement('div');
       yeni.className = "gonderi";
+      yeni.dataset.sahip = kullanici.isim; // Gönderi sahibini kaydet
+
+      // Zaman bilgisi
+      const simdi = new Date();
+      const zaman = simdi.toLocaleString('tr-TR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
 
       // Kullanıcı bilgilerini ekle
       var icerikHTML = `
@@ -290,6 +385,13 @@
           <div class="gonderi-kullanici-isim">${kullanici.isim}</div>
         </div>
         <p>${metin}</p>
+        <div class="gonderi-zamani">${zaman}</div>
+        <div class="gonderi-aksiyonlar">
+          <button class="begeni-butonu" onclick="begeni(this)">
+            <span class="begeni-sayisi">0</span> 👍
+          </button>
+          <button class="sil-butonu" onclick="gonderiSil(this)">Sil</button>
+        </div>
       `;
 
       if (dosya) {
@@ -315,6 +417,46 @@
 
       girdi.value = "";
       document.getElementById('dosya-' + konu).value = "";
+    }
+    
+    // Yeni eklenen fonksiyonlar
+    function begeni(buton) {
+      const begeniSayisi = buton.querySelector('.begeni-sayisi');
+      let sayi = parseInt(begeniSayisi.textContent);
+      sayi++;
+      begeniSayisi.textContent = sayi;
+      
+      // Buton rengini değiştir
+      buton.style.color = '#ff6b6b';
+    }
+    
+    function gonderiSil(buton) {
+      const gonderi = buton.closest('.gonderi');
+      const sahip = gonderi.dataset.sahip;
+      
+      if (sahip === kullanici.isim) {
+        if (confirm('Bu gönderiyi silmek istediğinize emin misiniz?')) {
+          gonderi.remove();
+          // Paylaşım sayısını güncelle
+          kullanici.toplamPaylasim--;
+          document.getElementById('toplam-paylasim').textContent = kullanici.toplamPaylasim;
+        }
+      } else {
+        alert('Sadece kendi gönderilerinizi silebilirsiniz.');
+      }
+    }
+    
+    function temaDegistir() {
+      const body = document.body;
+      const buton = document.querySelector('.tema-degis');
+      
+      if (body.classList.contains('aydinlik')) {
+        body.classList.remove('aydinlik');
+        buton.textContent = 'Karanlık Mod';
+      } else {
+        body.classList.add('aydinlik');
+        buton.textContent = 'Aydınlık Mod';
+      }
     }
   </script>
 </body>
