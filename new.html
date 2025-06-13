@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>FikirKafe</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Segoe+Script&display=swap');
+    
+    body {
+		margin: 0;
+		padding: 0;
+		font-family: 'Segoe UI', sans-serif;
+		background: url('kafe-mimarisi.jpg') no-repeat center center fixed;
+		background-size: cover;
+	}
+
+    .baslik h2 {
+      font-family: 'Segoe Script', cursive;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+	.sekme-bar {
+		display: flex;
+		justify-content: center;
+		padding: 15px 0;
+		position: relative;
+	}
+
+	.profil-sekme {
+		position: absolute;
+		right: 20px;
+		top: 15px;
+	}
+
+	.baslik {
+		background-color: rgba(0, 0, 0, 0.6);
+		color: white;
+		padding: 15px;
+		text-align: center;
+	}
+
+	.sekme.aktif {
+		background-color: rgba(0, 0, 0, 0.6);
+		color: white;
+	}
+
+	button {
+		margin-top: 10px;
+		padding: 8px 20px;
+		background-color: rgba(0, 0, 0, 0.6);
+		color: white;
+		border: none;
+		cursor: pointer;
+	}
+ 
+    .sekme {
+		padding: 10px 15px;
+		cursor: pointer;
+		background-color: rgba(0, 0, 0, 0.5);
+		color: white;
+		border-radius: 20px;
+		margin: 0 5px;
+		transition: background-color 0.3s;
+	}
+
+    .sekme.aktif {
+		background-color: rgba(0, 0, 0, 0.8); 
+		color: white;
+	}
+
+    .icerik {
+		display: none;
+		width: 90%;
+		margin: auto;
+		padding: 15px;
+		background-color: rgba(0, 0, 0, 0.6); 
+		color: white;
+		border-radius: 10px;
+	}
+
+    .icerik.aktif {
+      display: block;
+    }
+
+    textarea {
+      width: 70%;
+      height: 70px;
+      padding: 8px;
+    }
+
+	.sekme:hover {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+
+    .gonderi {
+      background: rgba(0, 0, 0, 0.7); /* Siyah arka plan */
+      padding: 10px;
+      margin-top: 15px;
+      border-left: 4px solid white; /* Yeşil yerine beyaz kenar çizgisi */
+      color: white; /* Yazı rengi beyaz */
+      border-radius: 5px;
+      position: relative;
+    }
+	
+	.gonderi-kullanici {
+		display: flex;
+		align-items: center;
+		margin-bottom: 10px;
+		padding-bottom: 5px;
+		border-bottom: 1px solid #444; /* Daha koyu çizgi */
+	}
+	
+	.gonderi-profil-resim {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
+	
+	.gonderi-kullanici-isim {
+		font-weight: bold;
+		font-size: 14px;
+		color: white; /* Kullanıcı adı beyaz */
+	}
+	
+	.profil-container {
+		text-align: center;
+		padding: 20px;
+	}
+	
+	.profil-resim {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		object-fit: cover;
+		margin-bottom: 15px;
+		border: 3px solid white;
+	}
+	
+	.profil-bilgi {
+		background-color: rgba(0, 0, 0, 0.7); /* Siyah arka plan */
+		padding: 15px;
+		border-radius: 10px;
+		margin-top: 20px;
+		color: white; /* Yazı rengi beyaz */
+		border: 1px solid white; /* Beyaz kenarlık */
+	}
+	
+	.profil-isim {
+		font-size: 24px;
+		font-weight: bold;
+		margin-bottom: 10px;
+		color: white;
+	}
+	
+	.profil-detay {
+		margin: 5px 0;
+		color: #ccc; /* Açık gri yazı */
+	}
+	
+	.profil-detay strong {
+		color: white; /* Kalın yazılar beyaz */
+	}
+  </style>
+</head>
+<body>
+
+  <div class="baslik">
+    <h2>FikirKafe</h2>
+    <p>Düşüncelerin buluşma noktası</p>
+	<h6>halil ibrahim küççük 247351027<h6>
+  </div>
+
+  <div class="sekme-bar">
+    <div class="sekme aktif" onclick="sekmeAc('gundem')">Gündem</div>
+    <div class="sekme" onclick="sekmeAc('teknoloji')">Teknoloji</div>
+    <div class="sekme" onclick="sekmeAc('egitim')">Eğitim</div>
+    <div class="sekme" onclick="sekmeAc('sanat')">Sanat</div>
+    <div class="sekme" onclick="sekmeAc('bilim')">Bilim</div>
+    <div class="profil-sekme sekme" onclick="sekmeAc('profil')">Profil</div>
+  </div>
+
+  <div id="gundem" class="icerik aktif">
+    <h3>Gündem</h3>
+    <textarea id="girdi-gundem" placeholder="Gündem hakkında yaz..."></textarea>
+    <input type="file" id="dosya-gundem">
+    <button onclick="paylas('gundem')">Paylaş</button>
+    <div id="gonderiler-gundem"></div>
+  </div>
+
+  <div id="teknoloji" class="icerik">
+    <h3>Teknoloji</h3>
+    <textarea id="girdi-teknoloji" placeholder="Teknoloji hakkında yaz..."></textarea>
+    <input type="file" id="dosya-teknoloji">
+    <button onclick="paylas('teknoloji')">Paylaş</button>
+    <div id="gonderiler-teknoloji"></div>
+  </div>
+
+  <div id="egitim" class="icerik">
+    <h3>Eğitim</h3>
+    <textarea id="girdi-egitim" placeholder="Eğitim hakkında yaz..."></textarea>
+    <input type="file" id="dosya-egitim">
+    <button onclick="paylas('egitim')">Paylaş</button>
+    <div id="gonderiler-egitim"></div>
+  </div>
+
+  <div id="sanat" class="icerik">
+    <h3>Sanat</h3>
+    <textarea id="girdi-sanat" placeholder="Sanat hakkında yaz..."></textarea>
+    <input type="file" id="dosya-sanat">
+    <button onclick="paylas('sanat')">Paylaş</button>
+    <div id="gonderiler-sanat"></div>
+  </div>
+
+  <div id="bilim" class="icerik">
+    <h3>Bilim</h3>
+    <textarea id="girdi-bilim" placeholder="Bilim hakkında yaz..."></textarea>
+    <input type="file" id="dosya-bilim">
+    <button onclick="paylas('bilim')">Paylaş</button>
+    <div id="gonderiler-bilim"></div>
+  </div>
+  
+  <div id="profil" class="icerik">
+    <div class="profil-container">
+      <img src="https://i.pravatar.cc/150?img=3" class="profil-resim" id="profil-resim">
+      <div class="profil-bilgi">
+        <div class="profil-isim" id="profil-isim">Ayşe Kaya</div>
+        <div class="profil-detay"><strong>Üyelik Tarihi:</strong> <span id="uyelik-tarihi">15 Mart 2023</span></div>
+        <div class="profil-detay"><strong>Toplam Paylaşım:</strong> <span id="toplam-paylasim">24</span></div>
+        <div class="profil-detay"><strong>Takipçi:</strong> <span id="takipci">156</span></div>
+        <div class="profil-detay"><strong>Takip:</strong> <span id="takip">42</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Rastgele profil bilgileri oluşturma
+    const isimler = ['Ahmet Yılmaz', 'Mehmet Demir', 'Ayşe Kaya', 'Fatma Şahin', 'Emre Koç', 'Zeynep Arslan'];
+    const uyelikTarihleri = ['15 Mart 2023', '10 Ocak 2023', '22 Şubat 2023', '5 Aralık 2022', '30 Nisan 2023'];
+    const randomImg = Math.floor(Math.random() * 70) + 1; // 1-70 arası rastgele sayı
+    
+    // Kullanıcı bilgilerini global olarak tanımla
+    const kullanici = {
+      resim: `https://i.pravatar.cc/150?img=${randomImg}`,
+      isim: isimler[Math.floor(Math.random() * isimler.length)],
+      uyelikTarihi: uyelikTarihleri[Math.floor(Math.random() * uyelikTarihleri.length)],
+      toplamPaylasim: Math.floor(Math.random() * 50) + 10,
+      takipci: Math.floor(Math.random() * 200) + 50,
+      takip: Math.floor(Math.random() * 100) + 20
+    };
+    
+    // Profil bilgilerini ayarla
+    document.getElementById('profil-resim').src = kullanici.resim;
+    document.getElementById('profil-isim').textContent = kullanici.isim;
+    document.getElementById('uyelik-tarihi').textContent = kullanici.uyelikTarihi;
+    document.getElementById('toplam-paylasim').textContent = kullanici.toplamPaylasim;
+    document.getElementById('takipci').textContent = kullanici.takipci;
+    document.getElementById('takip').textContent = kullanici.takip;
+
+    function sekmeAc(ad) {
+      var sekmeler = document.querySelectorAll('.sekme');
+      var icerikler = document.querySelectorAll('.icerik');
+
+      sekmeler.forEach(s => s.classList.remove('aktif'));
+      icerikler.forEach(i => i.classList.remove('aktif'));
+
+      document.querySelector('.sekme[onclick="sekmeAc(\'' + ad + '\')"]').classList.add('aktif');
+      document.getElementById(ad).classList.add('aktif');
+    }
+
+    function paylas(konu) {
+      var girdi = document.getElementById('girdi-' + konu);
+      var dosya = document.getElementById('dosya-' + konu).files[0];
+      var metin = girdi.value.trim();
+
+      if (metin === "" && !dosya) {
+        alert("Bir şey yazın veya bir görsel seçin.");
+        return;
+      }
+
+      var yeni = document.createElement('div');
+      yeni.className = "gonderi";
+
+      // Kullanıcı bilgilerini ekle
+      var icerikHTML = `
+        <div class="gonderi-kullanici">
+          <img src="${kullanici.resim}" class="gonderi-profil-resim">
+          <div class="gonderi-kullanici-isim">${kullanici.isim}</div>
+        </div>
+        <p>${metin}</p>
+      `;
+
+      if (dosya) {
+        var okuyucu = new FileReader();
+        okuyucu.onload = function(e) {
+          icerikHTML += `<img src="${e.target.result}" style="max-width:100%; margin-top:10px;">`;
+          yeni.innerHTML = icerikHTML;
+          
+          // Paylaşım sayısını güncelle
+          kullanici.toplamPaylasim++;
+          document.getElementById('toplam-paylasim').textContent = kullanici.toplamPaylasim;
+        };
+        okuyucu.readAsDataURL(dosya);
+      } else {
+        yeni.innerHTML = icerikHTML;
+        // Paylaşım sayısını güncelle
+        kullanici.toplamPaylasim++;
+        document.getElementById('toplam-paylasim').textContent = kullanici.toplamPaylasim;
+      }
+
+      var liste = document.getElementById('gonderiler-' + konu);
+      liste.prepend(yeni);
+
+      girdi.value = "";
+      document.getElementById('dosya-' + konu).value = "";
+    }
+  </script>
+</body>
+</html>
